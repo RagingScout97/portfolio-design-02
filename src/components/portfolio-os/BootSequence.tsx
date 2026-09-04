@@ -6,11 +6,10 @@ import { prefersReducedMotion } from "@/lib/motion";
 
 const LINES = [
   "RAGINGSCOUT97 SYSTEMS",
-  "INITIALIZING KERNEL...",
-  "LOADING PROFILE MODULE...",
-  "MOUNTING SKILL TREE...",
-  "SYNCING MISSION ARCHIVE...",
-  "HUD ONLINE",
+  "LOADING SAVE DATA...",
+  "MOUNTING ABILITY TREE...",
+  "SYNCING QUEST LOG...",
+  "MENU READY",
 ];
 
 export function BootSequence({ onComplete }: { onComplete: () => void }) {
@@ -67,36 +66,37 @@ export function BootSequence({ onComplete }: { onComplete: () => void }) {
 
   return (
     <motion.div
-      className="relative z-20 flex h-full w-full flex-col items-center justify-center px-6"
+      className="relative z-20 flex h-full w-full flex-col items-center justify-center px-4"
       exit={{ opacity: 0 }}
-      transition={{ duration: 0.4 }}
+      transition={{ duration: 0.35 }}
     >
-      <p className="mb-3 font-mono text-[11px] tracking-[0.35em] text-accent">
-        BOOT SEQUENCE
-      </p>
-      <h1 className="text-center font-display text-4xl font-extrabold tracking-tight text-ink md:text-6xl md:tracking-[-0.04em]">
-        RagingScout97
-        <span className="block text-xl font-medium tracking-[0.18em] text-ink-muted md:text-2xl">
-          SYSTEMS
-        </span>
-      </h1>
+      <div className="panel-frame w-full max-w-lg p-6 md:p-8">
+        <p className="pixel-title text-center text-accent">BOOT SEQUENCE</p>
+        <h1 className="pixel-title-lg mt-6 text-center text-ink">
+          RagingScout97
+        </h1>
+        <p className="pixel-title mt-3 text-center text-ink-muted">SYSTEMS</p>
 
-      <div className="mt-10 w-full max-w-md">
-        <div className="mb-2 flex justify-between font-mono text-[11px] text-ink-muted">
-          <span>{LINES[lineIdx]}</span>
-          <span>{progress}%</span>
+        <div className="mt-8">
+          <div className="mb-2 flex justify-between font-mono text-[11px] text-ink-muted">
+            <span>{LINES[lineIdx]}</span>
+            <span className="text-accent">{progress}%</span>
+          </div>
+          <div className="h-4 border-2 border-hairline bg-canvas p-0.5">
+            <div
+              className="h-full bg-accent"
+              style={{
+                width: `${progress}%`,
+                imageRendering: "pixelated",
+              }}
+            />
+          </div>
         </div>
-        <div className="h-1.5 overflow-hidden border border-hairline bg-surface">
-          <motion.div
-            className="h-full bg-accent"
-            style={{ width: `${progress}%` }}
-          />
-        </div>
+
+        <p className="mt-6 text-center font-mono text-[10px] text-ink-muted">
+          PRESS ANY KEY / TAP TO SKIP
+        </p>
       </div>
-
-      <p className="mt-8 font-mono text-[10px] tracking-[0.25em] text-ink-muted">
-        CLICK OR PRESS ANY KEY TO SKIP
-      </p>
     </motion.div>
   );
 }

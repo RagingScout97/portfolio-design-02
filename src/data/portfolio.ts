@@ -3,7 +3,7 @@ import type { MenuItem, PortfolioData } from "@/types/portfolio";
 export const MENU_ITEMS: MenuItem[] = [
   { id: "dossier", index: "01", label: "DOSSIER", subtitle: "identity" },
   { id: "loadout", index: "02", label: "LOADOUT", subtitle: "skill tree" },
-  { id: "deployments", index: "03", label: "DEPLOYMENTS", subtitle: "experience" },
+  { id: "deployments", index: "03", label: "EXPERIENCE", subtitle: "ability tree" },
   { id: "missions", index: "04", label: "MISSIONS", subtitle: "projects" },
   { id: "arcade", index: "05", label: "ARCADE", subtitle: "mini-game" },
   { id: "uplink", index: "06", label: "UPLINK", subtitle: "contact" },

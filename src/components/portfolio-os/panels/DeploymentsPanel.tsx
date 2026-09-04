@@ -1,54 +1,48 @@
 "use client";
 
+import { useMemo, useState } from "react";
 import { portfolio } from "@/data/portfolio";
+import { AbilityDetailRail } from "../ability-tree/AbilityDetailRail";
+import { AbilityTreeCanvas } from "../ability-tree/AbilityTreeCanvas";
+import {
+  abilityTreeBounds,
+  experiencesToAbilityNodes,
+} from "../ability-tree/mapExperiences";
 
 export function DeploymentsPanel() {
-  return (
-    <section className="panel-frame p-5 md:p-8">
-      <p className="font-mono text-[11px] tracking-[0.28em] text-accent">
-        03 · DEPLOYMENTS
-      </p>
-      <h2 className="mt-2 font-display text-3xl font-bold tracking-tight md:text-4xl">
-        Campaign Log
-      </h2>
-      <p className="mt-2 max-w-xl text-ink-muted">
-        Experience framed as deployments — objectives completed in the field.
-      </p>
+  const nodes = useMemo(
+    () => experiencesToAbilityNodes(portfolio.experiences),
+    [],
+  );
+  const bounds = useMemo(() => abilityTreeBounds(nodes), [nodes]);
+  const [selectedId, setSelectedId] = useState(nodes[0]?.id ?? "");
 
-      <ol className="mt-8 space-y-6">
-        {portfolio.experiences.map((exp, i) => (
-          <li
-            key={`${exp.company}-${exp.role}`}
-            className="relative border border-hairline bg-surface-2/60 p-5"
-          >
-            <div className="flex flex-wrap items-baseline justify-between gap-2">
-              <div>
-                <span className="font-mono text-[10px] tracking-[0.2em] text-accent">
-                  CHAPTER {String(i + 1).padStart(2, "0")}
-                </span>
-                <h3 className="mt-1 font-display text-2xl font-semibold">
-                  {exp.role}
-                </h3>
-                <p className="text-sm text-ink-muted">{exp.company}</p>
-              </div>
-              <p className="font-mono text-xs text-accent-hot">
-                {exp.from} — {exp.to}
-              </p>
-            </div>
-            <ul className="mt-4 space-y-2">
-              {exp.description.map((line) => (
-                <li
-                  key={line}
-                  className="flex gap-2 text-sm leading-relaxed text-ink-muted"
-                >
-                  <span className="mt-1 text-accent">▹</span>
-                  <span>{line}</span>
-                </li>
-              ))}
-            </ul>
-          </li>
-        ))}
-      </ol>
+  return (
+    <section>
+      <div className="panel-frame mb-4 p-4 md:p-5">
+        <p className="pixel-title text-accent">03 · EXPERIENCE</p>
+        <h2 className="pixel-title-lg mt-3 text-ink">Ability Tree</h2>
+        <p className="mt-3 max-w-xl font-mono text-sm text-ink-muted">
+          Wynncraft-style path — select a node to light the route and read the
+          ability brief.
+        </p>
+      </div>
+
+      <div className="grid gap-4 lg:grid-cols-[1.25fr_0.9fr]">
+        <AbilityTreeCanvas
+          nodes={nodes}
+          selectedId={selectedId}
+          onSelect={setSelectedId}
+          width={bounds.width}
+          height={bounds.height}
+        />
+        <AbilityDetailRail
+          nodes={nodes}
+          selectedId={selectedId}
+          onSelect={setSelectedId}
+          headerLabel="Active Abilities"
+        />
+      </div>
     </section>
   );
 }

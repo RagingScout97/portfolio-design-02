@@ -7,7 +7,7 @@ const LABELS: Record<SectionId, string> = {
   menu: "MAIN MENU",
   dossier: "DOSSIER",
   loadout: "LOADOUT",
-  deployments: "DEPLOYMENTS",
+  deployments: "EXPERIENCE",
   missions: "MISSIONS",
   arcade: "ARCADE",
   uplink: "UPLINK",
@@ -23,17 +23,15 @@ export function HudChrome({
   onNavigate: (id: SectionId) => void;
 }) {
   return (
-    <header className="relative z-20 flex shrink-0 items-center justify-between gap-3 border-b border-hairline bg-canvas/80 px-4 py-3 backdrop-blur-md md:px-6">
+    <header className="relative z-20 flex shrink-0 items-center justify-between gap-3 border-b-4 border-hairline bg-surface px-3 py-2 md:px-5">
       <button
         type="button"
         onClick={onHome}
-        className="text-left transition hover:text-accent"
+        className="min-h-11 text-left hover:text-accent"
       >
-        <p className="font-mono text-[10px] tracking-[0.28em] text-accent">
-          RAGINGSCOUT97 SYSTEMS
-        </p>
-        <p className="font-display text-sm font-semibold tracking-wide">
-          {portfolio.profile.name}
+        <p className="pixel-title text-[8px] text-accent">RAGINGSCOUT97</p>
+        <p className="mt-1 font-mono text-[11px] text-ink">
+          {portfolio.profile.name.split(" ")[0]}
         </p>
       </button>
 
@@ -45,10 +43,10 @@ export function HudChrome({
               key={item.id}
               type="button"
               onClick={() => onNavigate(item.id)}
-              className={`px-2 py-1 font-mono text-[10px] tracking-[0.14em] transition ${
+              className={`min-h-11 border-2 px-2 py-1 font-mono text-[10px] ${
                 active
-                  ? "text-accent"
-                  : "text-ink-muted hover:text-ink"
+                  ? "border-accent bg-accent/15 text-accent"
+                  : "border-transparent text-ink-muted hover:border-hairline hover:text-ink"
               }`}
             >
               {item.index}
@@ -57,9 +55,9 @@ export function HudChrome({
         })}
       </div>
 
-      <div className="text-right font-mono text-[10px] tracking-[0.18em] text-ink-muted">
-        <p className="text-ink">{LABELS[section]}</p>
-        <p>ONLINE</p>
+      <div className="text-right">
+        <p className="pixel-title text-[8px] text-ink">{LABELS[section]}</p>
+        <p className="mt-1 font-mono text-[10px] text-ok">ONLINE</p>
       </div>
     </header>
   );

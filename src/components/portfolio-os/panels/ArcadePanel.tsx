@@ -190,23 +190,18 @@ export function ArcadePanel() {
   };
 
   return (
-    <section className="panel-frame p-5 md:p-8">
-      <p className="font-mono text-[11px] tracking-[0.28em] text-accent">
-        05 · ARCADE
-      </p>
-      <h2 className="mt-2 font-display text-3xl font-bold tracking-tight md:text-4xl">
-        Word Barrage
-      </h2>
-      <p className="mt-2 max-w-xl text-ink-muted">
-        Tap or click falling tech words before they hit the floor. Move the
-        scout ship as you fire.
+    <section className="panel-frame p-4 md:p-6">
+      <p className="pixel-title text-accent">05 · ARCADE</p>
+      <h2 className="pixel-title-lg mt-3 text-ink">Word Barrage</h2>
+      <p className="mt-2 max-w-xl font-mono text-sm text-ink-muted">
+        Tap or click falling tech words before they hit the floor.
       </p>
 
-      <div className="mt-6 flex flex-wrap items-center gap-3">
+      <div className="mt-5 flex flex-wrap items-center gap-3">
         <button
           type="button"
           onClick={reset}
-          className="bg-ink px-4 py-2 font-mono text-[11px] tracking-[0.16em] text-canvas transition hover:bg-accent"
+          className="min-h-11 bg-accent px-4 py-2 font-mono text-[11px] text-canvas hover:bg-ink hover:text-accent"
         >
           {running ? "RESTART" : gameOver ? "PLAY AGAIN" : "START"}
         </button>
