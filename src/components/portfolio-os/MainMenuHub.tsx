@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Image from "next/image";
 import { useEffect, useState } from "react";
 import { MENU_ITEMS, portfolio } from "@/data/portfolio";
 import { prefersReducedMotion } from "@/lib/motion";
@@ -12,12 +13,12 @@ import { PixelBanner } from "./ui/PixelBanner";
 import { StatusPill } from "./ui/StatusPill";
 
 const MENU_ICONS: Record<string, string> = {
-  dossier: "▣",
-  loadout: "⚔",
-  deployments: "♦",
-  missions: "※",
-  arcade: "▶",
-  uplink: "⌂",
+  dossier: "/game-ui/generated/icon-dossier.png",
+  loadout: "/game-ui/generated/icon-loadout.png",
+  deployments: "/game-ui/generated/icon-experience.png",
+  missions: "/game-ui/generated/icon-missions.png",
+  arcade: "/game-ui/generated/icon-arcade.png",
+  uplink: "/game-ui/generated/icon-uplink.png",
 };
 
 export function MainMenuHub({
@@ -114,8 +115,19 @@ export function MainMenuHub({
                       <span className="font-mono text-xs text-accent">
                         {item.index}
                       </span>
-                      <span className="w-5 text-center text-sm" aria-hidden>
-                        {MENU_ICONS[item.id] ?? "•"}
+                      <span className="relative inline-flex h-5 w-5 shrink-0 items-center justify-center">
+                        {MENU_ICONS[item.id] ? (
+                          <Image
+                            src={MENU_ICONS[item.id]}
+                            alt=""
+                            width={20}
+                            height={20}
+                            className="pixel-sprite h-5 w-5 object-contain"
+                            unoptimized
+                          />
+                        ) : (
+                          <span aria-hidden>•</span>
+                        )}
                       </span>
                       <span className="pixel-title flex-1 text-[10px] md:text-[11px]">
                         {item.label}

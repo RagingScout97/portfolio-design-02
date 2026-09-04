@@ -46,10 +46,10 @@ export function HudChrome({
               key={item.id}
               type="button"
               onClick={() => onNavigate(item.id)}
-              className={`min-h-11 min-w-11 border-2 px-2 py-1 font-mono text-[10px] ${
+              className={`hud-chip min-h-11 min-w-11 px-2 py-1 font-mono text-[10px] ${
                 active
-                  ? "border-accent bg-accent/15 text-accent shadow-[0_0_10px_rgba(82,217,236,0.35)]"
-                  : "border-transparent text-ink-muted hover:border-hairline hover:text-ink"
+                  ? "text-accent shadow-[0_0_10px_rgba(82,217,236,0.35)]"
+                  : "text-ink-muted opacity-80 hover:opacity-100 hover:text-ink"
               }`}
               aria-label={item.label}
               title={item.label}
