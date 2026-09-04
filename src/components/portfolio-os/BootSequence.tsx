@@ -18,24 +18,12 @@ const BOOT_LOG = [
 
 function WireframeGlobe() {
   return (
-    <svg viewBox="0 0 160 160" className="pixel mx-auto h-36 w-36 md:h-44 md:w-44" aria-hidden>
-      <circle
-        cx="80"
-        cy="80"
-        r="68"
-        fill="#0a0b0c"
-        stroke="#4a4e52"
-        strokeWidth="4"
-      />
-      <circle cx="80" cy="80" r="58" fill="none" stroke="#52d9ec" strokeWidth="1.5" opacity="0.85" />
-      <ellipse cx="80" cy="80" rx="58" ry="22" fill="none" stroke="#52d9ec" strokeWidth="1" opacity="0.5" />
-      <ellipse cx="80" cy="80" rx="58" ry="40" fill="none" stroke="#52d9ec" strokeWidth="1" opacity="0.4" />
-      <ellipse cx="80" cy="80" rx="22" ry="58" fill="none" stroke="#52d9ec" strokeWidth="1" opacity="0.5" />
-      <ellipse cx="80" cy="80" rx="40" ry="58" fill="none" stroke="#52d9ec" strokeWidth="1" opacity="0.35" />
-      <line x1="22" y1="80" x2="138" y2="80" stroke="#52d9ec" strokeWidth="1" opacity="0.6" />
-      <line x1="80" y1="22" x2="80" y2="138" stroke="#52d9ec" strokeWidth="1" opacity="0.6" />
-      <circle cx="80" cy="80" r="3" fill="#52d9ec" />
-    </svg>
+    // eslint-disable-next-line @next/next/no-img-element
+    <img
+      src="/game-ui/sprites/boot-globe.png"
+      alt=""
+      className="pixel-sprite mx-auto h-36 w-auto max-w-full object-contain md:h-44"
+    />
   );
 }
 

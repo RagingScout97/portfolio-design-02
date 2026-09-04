@@ -43,3 +43,7 @@ next-env.d.ts
 .playwright/
 .vercel
 
+# local asset scratch / duplicate ChatGPT exports
+/tmp-assets/
+/public/ChatGPT Image*.png
+

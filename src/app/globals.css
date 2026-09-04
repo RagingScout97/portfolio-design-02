@@ -75,21 +75,15 @@ img.pixel,
 .hud-grid {
   background-color: var(--canvas);
   background-image:
-    linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-    repeating-linear-gradient(
-      0deg,
-      transparent,
-      transparent 7px,
-      rgba(0, 0, 0, 0.15) 7px,
-      rgba(0, 0, 0, 0.15) 8px
-    ),
+    linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.55)),
+    url("/game-ui/sprites/stone-tile.png?v=2"),
     linear-gradient(180deg, #121416 0%, #0a0b0c 100%);
   background-size:
-    32px 32px,
-    32px 32px,
-    100% 8px,
+    auto,
+    64px 64px,
     100% 100%;
+  background-repeat: repeat, repeat, no-repeat;
+  image-rendering: pixelated;
 }
 
 .scanlines::after {
@@ -108,88 +102,61 @@ img.pixel,
   z-index: 1;
 }
 
-/* Ornate stone panel */
+/* 9-slice pixel frames (Dark Dwellers remapped + ref assemblies) */
 .panel-frame {
   position: relative;
-  border: 3px solid #5a5e62;
-  background:
-    repeating-linear-gradient(
-      0deg,
-      transparent,
-      transparent 3px,
-      rgba(0, 0, 0, 0.1) 3px,
-      rgba(0, 0, 0, 0.1) 4px
-    ),
-    linear-gradient(180deg, #222528 0%, #1a1c1e 100%);
-  box-shadow:
-    inset 0 0 0 1px #0a0a0a,
-    inset 0 0 0 2px #3a3e42,
-    0 0 0 1px #0a0a0a,
-    0 4px 0 #0a0a0a;
-}
-
-.panel-frame::before {
-  content: "";
-  pointer-events: none;
-  position: absolute;
-  inset: 0;
-  border: 1px solid transparent;
-  box-shadow: inset 0 0 28px rgba(82, 217, 236, 0.05);
+  border-style: solid;
+  border-width: 18px;
+  border-color: transparent;
+  border-image-source: url("/game-ui/dark-dwellers/frame-panel-remapped.png");
+  border-image-slice: 28;
+  border-image-width: 18px;
+  border-image-repeat: stretch;
+  background-color: #16181a;
+  image-rendering: pixelated;
+  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.45);
 }
 
 .panel-frame-glow {
-  border-color: var(--accent);
+  border-image-source: url("/game-ui/dark-dwellers/frame-ornate-remapped.png");
+  border-image-slice: 28;
+  border-image-width: 18px;
+  background-color: #121416;
   box-shadow:
-    inset 0 0 0 1px #0a0a0a,
-    inset 0 0 0 2px #3a3e42,
-    0 0 0 1px var(--accent),
-    0 0 18px rgba(82, 217, 236, 0.28);
+    0 0 0 1px color-mix(in srgb, var(--accent) 50%, transparent),
+    0 0 18px rgba(82, 217, 236, 0.28),
+    0 4px 0 rgba(0, 0, 0, 0.45);
 }
 
 .ornate-outer {
   position: relative;
-  border: 4px solid #4a4e52;
-  background: linear-gradient(180deg, #1e2024 0%, #121416 100%);
-  box-shadow:
-    inset 0 0 0 2px #2a2e32,
-    inset 0 0 0 3px #1a1c1e,
-    0 0 0 1px #0a0a0a,
-    0 0 24px rgba(0, 0, 0, 0.5);
+  border-style: solid;
+  border-width: 22px;
+  border-color: transparent;
+  border-image-source: url("/game-ui/dark-dwellers/frame-outer-remapped.png");
+  border-image-slice: 28;
+  border-image-width: 22px;
+  border-image-repeat: stretch;
+  background-color: #101214;
+  image-rendering: pixelated;
+  box-shadow: 0 0 28px rgba(0, 0, 0, 0.55);
 }
 
-.ornate-outer::before,
-.ornate-outer::after {
-  content: "";
-  position: absolute;
-  width: 10px;
-  height: 10px;
-  background: var(--accent);
-  box-shadow: 0 0 8px rgba(82, 217, 236, 0.8);
-  z-index: 2;
-  pointer-events: none;
+.panel-frame-thin {
+  border-style: solid;
+  border-width: 12px;
+  border-color: transparent;
+  border-image-source: url("/game-ui/dark-dwellers/frame-thin-remapped.png");
+  border-image-slice: 24;
+  border-image-width: 12px;
+  border-image-repeat: stretch;
+  background-color: #16181a;
+  image-rendering: pixelated;
 }
 
-.ornate-outer::before {
-  top: 6px;
-  left: 6px;
-}
-
-.ornate-outer::after {
-  top: 6px;
-  right: 6px;
-}
-
-.ornate-gems {
-  pointer-events: none;
-}
-
-.ornate-gems span {
-  position: absolute;
-  width: 8px;
-  height: 8px;
-  background: var(--accent);
-  box-shadow: 0 0 6px rgba(82, 217, 236, 0.75);
-  z-index: 2;
+.pixel-sprite {
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
 }
 
 .pixel-title {

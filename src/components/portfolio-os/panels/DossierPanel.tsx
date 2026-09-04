@@ -32,24 +32,40 @@ export function DossierPanel() {
       <div className="mt-5 grid gap-4 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.2fr)_auto]">
         {/* Portrait */}
         <div className="flex flex-col items-center">
-          <div className="panel-frame relative aspect-[4/5] w-full max-w-[220px] overflow-hidden">
-            {profile.photoUrl ? (
-              <Image
-                src={profile.photoUrl}
-                alt={profile.name}
-                fill
-                className="object-cover"
-                sizes="220px"
-                priority
-              />
-            ) : (
-              <div className="flex h-full items-center justify-center bg-canvas text-ink-muted">
-                <span className="pixel-title text-accent">97</span>
-              </div>
-            )}
-            <span className="absolute bottom-2 right-2 border border-accent bg-canvas/80 px-1.5 py-0.5 font-mono text-[10px] text-accent">
-              97
-            </span>
+          <div className="relative w-full max-w-[220px]">
+            <div
+              className="pointer-events-none absolute inset-0 z-[2] pixel-sprite"
+              style={{
+                borderStyle: "solid",
+                borderWidth: 14,
+                borderColor: "transparent",
+                borderImageSource:
+                  "url(/game-ui/dark-dwellers/portrait-frame-remapped.png)",
+                borderImageSlice: "18 fill",
+                borderImageWidth: 14,
+                borderImageRepeat: "stretch",
+              }}
+              aria-hidden
+            />
+            <div className="relative aspect-[4/5] w-full overflow-hidden bg-canvas">
+              {profile.photoUrl ? (
+                <Image
+                  src={profile.photoUrl}
+                  alt={profile.name}
+                  fill
+                  className="object-cover"
+                  sizes="220px"
+                  priority
+                />
+              ) : (
+                <div className="flex h-full items-center justify-center bg-canvas text-ink-muted">
+                  <span className="pixel-title text-accent">97</span>
+                </div>
+              )}
+              <span className="absolute bottom-3 right-3 z-[3] border border-accent bg-canvas/80 px-1.5 py-0.5 font-mono text-[10px] text-accent">
+                97
+              </span>
+            </div>
           </div>
           <p className="mt-3 text-center pixel-title text-[8px] leading-relaxed text-ink">
             {profile.name.toUpperCase()}

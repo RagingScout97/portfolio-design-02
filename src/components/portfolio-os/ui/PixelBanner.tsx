@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 export function PixelBanner({
   icon,
   side = "left",
@@ -5,26 +7,27 @@ export function PixelBanner({
   icon: "sword" | "crosshair" | "trophy" | "pad" | "star" | "tree";
   side?: "left" | "right";
 }) {
-  const glyphs: Record<typeof icon, string> = {
-    sword: "⚔",
-    crosshair: "⌖",
-    trophy: "♛",
-    pad: "▣",
-    star: "★",
-    tree: "☘",
-  };
+  const src =
+    side === "left"
+      ? "/game-ui/sprites/banner-left.png"
+      : "/game-ui/sprites/banner-right.png";
 
   return (
     <div
-      className={`pointer-events-none absolute top-0 z-[1] hidden w-10 flex-col items-center md:flex ${
-        side === "left" ? "left-3 lg:left-6" : "right-3 lg:right-6"
+      className={`pointer-events-none absolute top-2 z-[1] hidden md:block ${
+        side === "left" ? "left-2 lg:left-4" : "right-2 lg:right-4"
       }`}
       aria-hidden
+      title={icon}
     >
-      <div className="h-3 w-8 border-x-2 border-t-2 border-gold/40 bg-stone" />
-      <div className="flex h-20 w-8 items-center justify-center border-2 border-hairline bg-surface text-accent shadow-[inset_0_0_8px_rgba(82,217,236,0.15)]">
-        <span className="text-lg leading-none">{glyphs[icon]}</span>
-      </div>
+      <Image
+        src={src}
+        alt=""
+        width={56}
+        height={128}
+        className="pixel-sprite h-28 w-auto opacity-95"
+        unoptimized
+      />
     </div>
   );
 }

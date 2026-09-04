@@ -7,6 +7,7 @@ import {
   useState,
   type PointerEvent as ReactPointerEvent,
 } from "react";
+import Image from "next/image";
 import { portfolio } from "@/data/portfolio";
 import { KeyHintBar } from "../ui/KeyHintBar";
 import { OrnateFrame } from "../ui/OrnateFrame";
@@ -41,28 +42,28 @@ const CABINETS = [
     name: "WORD BARRAGE",
     blurb: "Tap falling tech words before they hit the floor.",
     playable: true,
-    preview: " Barrage ",
+    sprite: "/game-ui/sprites/cabinet-1.png",
   },
   {
     id: "snake",
     name: "SNAKE BYTE",
     blurb: "Classic snake. Eat pixels, grow longer, avoid walls.",
     playable: false,
-    preview: " Snake ",
+    sprite: "/game-ui/sprites/cabinet-2.png",
   },
   {
     id: "breaker",
     name: "BLOCK BREAKER",
     blurb: "Breakout-style brick smash. Coming soon.",
     playable: false,
-    preview: " Break ",
+    sprite: "/game-ui/sprites/cabinet-3.png",
   },
   {
     id: "runner",
     name: "CODE RUNNER",
     blurb: "Side-scroll through syntax storms. Coming soon.",
     playable: false,
-    preview: " Run ",
+    sprite: "/game-ui/sprites/cabinet-4.png",
   },
 ] as const;
 
@@ -316,14 +317,17 @@ export function ArcadePanel() {
                       : "opacity-80 hover:opacity-100"
                   }`}
                 >
-                  <div
-                    className={`relative mb-2 flex h-24 w-full flex-col items-center justify-center border-2 bg-canvas font-mono text-[10px] ${
-                      active ? "border-accent text-accent" : "border-hairline text-ink-muted"
-                    }`}
-                  >
-                    <span>{c.preview}</span>
+                  <div className="relative mb-2 w-full overflow-hidden bg-canvas">
+                    <Image
+                      src={c.sprite}
+                      alt=""
+                      width={220}
+                      height={360}
+                      className="pixel-sprite mx-auto h-36 w-auto object-contain"
+                      unoptimized
+                    />
                     {!c.playable && (
-                      <span className="mt-2 text-[8px] text-accent-hot">
+                      <span className="absolute inset-x-0 bottom-1 text-center font-mono text-[8px] text-accent-hot">
                         LOCKED
                       </span>
                     )}
