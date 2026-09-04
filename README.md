@@ -23,4 +23,7 @@ Edit identity, skills, experience, and projects in [`src/data/portfolio.ts`](src
 
 ## Deploy
 
-Push to `main` → Vercel. Domain target: `ragingscout97.in`.
+Push to `main` → Vercel auto-deploys project **portfolio-design-02**.
+
+- Live preview: https://portfolio-design-02.vercel.app
+- Custom domain cutover: see [DOMAIN-CUTOVER.md](DOMAIN-CUTOVER.md)
