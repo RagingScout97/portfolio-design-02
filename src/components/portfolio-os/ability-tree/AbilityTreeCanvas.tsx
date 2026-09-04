@@ -1,7 +1,8 @@
 "use client";
 
 import { useMemo } from "react";
-import { iconSrc, litPathIds, type AbilityNode } from "./types";
+import { GameIcon } from "@/components/icons/GameIcon";
+import { ABILITY_ICON_NAME, litPathIds, type AbilityNode } from "./types";
 
 export function AbilityTreeCanvas({
   nodes,
@@ -91,13 +92,15 @@ export function AbilityTreeCanvas({
                     : undefined
                 }
               />
-              <image
-                href={iconSrc(node.icon)}
-                x={6}
-                y={6}
-                width={32}
-                height={32}
-                style={{ imageRendering: "pixelated" }}
+              <GameIcon
+                name={ABILITY_ICON_NAME[node.icon]}
+                x={7}
+                y={7}
+                width={30}
+                height={30}
+                className={
+                  active || onPath ? "text-accent" : "text-ink-muted/70"
+                }
               />
               <title>{node.label}</title>
             </g>

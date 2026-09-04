@@ -1,3 +1,5 @@
+import type { GameIconName } from "@/components/icons/GameIcon";
+
 export type AbilityIcon =
   | "root"
   | "sword"
@@ -19,9 +21,16 @@ export interface AbilityNode {
   meta?: string;
 }
 
-export function iconSrc(icon: AbilityIcon): string {
-  return `/game-ui/nodes/${icon}.svg`;
-}
+export const ABILITY_ICON_NAME: Record<AbilityIcon, GameIconName> = {
+  root: "rune-stone",
+  sword: "broadsword",
+  code: "laptop",
+  star: "round-star",
+  gear: "cog",
+  bolt: "crystal-shine",
+  book: "spell-book",
+  shield: "shield",
+};
 
 /** Collect ancestor path ids from root(s) to selected (inclusive). */
 export function litPathIds(

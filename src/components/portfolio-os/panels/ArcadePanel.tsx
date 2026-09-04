@@ -10,7 +10,6 @@ import {
 import { portfolio } from "@/data/portfolio";
 import { KeyHintBar } from "../ui/KeyHintBar";
 import { OrnateFrame } from "../ui/OrnateFrame";
-import { PixelBanner } from "../ui/PixelBanner";
 import { SectionTitle } from "../ui/SectionTitle";
 
 type Word = {
@@ -288,8 +287,6 @@ export function ArcadePanel() {
 
   return (
     <OrnateFrame className="p-3 md:p-5">
-      <PixelBanner icon="trophy" side="left" />
-      <PixelBanner icon="pad" side="right" />
       <SectionTitle>ARCADE</SectionTitle>
       <p className="mt-2 text-center pixel-title text-[8px] text-accent">
         PLAY · COMPETE · LEVEL UP

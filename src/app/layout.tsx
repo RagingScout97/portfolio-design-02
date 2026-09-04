@@ -1,11 +1,21 @@
 import type { Metadata } from "next";
-import { JetBrains_Mono, Press_Start_2P } from "next/font/google";
+import {
+  Grenze_Gotisch,
+  JetBrains_Mono,
+  Press_Start_2P,
+} from "next/font/google";
 import "./globals.css";
 
 const pressStart = Press_Start_2P({
   variable: "--font-press-start",
   subsets: ["latin"],
   weight: "400",
+});
+
+const grenze = Grenze_Gotisch({
+  variable: "--font-grenze",
+  subsets: ["latin"],
+  weight: ["400", "700", "900"],
 });
 
 const jetbrains = JetBrains_Mono({
@@ -36,7 +46,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${pressStart.variable} ${jetbrains.variable} h-full`}
+      className={`${pressStart.variable} ${grenze.variable} ${jetbrains.variable} h-full`}
     >
       <body className="min-h-full overflow-hidden bg-canvas text-ink">
         {children}

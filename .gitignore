@@ -43,3 +43,6 @@ next-env.d.ts
 .playwright/
 .vercel
 
+# scratch space for raw reference art and downloads
+/tmp-assets/
+

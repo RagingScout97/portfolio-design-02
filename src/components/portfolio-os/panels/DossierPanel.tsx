@@ -1,10 +1,11 @@
 "use client";
 
+import { motion } from "framer-motion";
 import Image from "next/image";
+import { GameIcon, type GameIconName } from "@/components/icons/GameIcon";
 import { portfolio } from "@/data/portfolio";
 import { KeyHintBar } from "../ui/KeyHintBar";
 import { OrnateFrame } from "../ui/OrnateFrame";
-import { PixelBanner } from "../ui/PixelBanner";
 import { SectionTitle } from "../ui/SectionTitle";
 
 const STATS = [
@@ -13,10 +14,10 @@ const STATS = [
   { label: "RELIABILITY (DELIVERY)", value: 90 },
 ];
 
-const TRAITS = [
-  { id: "code", label: "CODE", icon: "</>" },
-  { id: "arch", label: "ARCHITECT", icon: "♜" },
-  { id: "player", label: "PLAYER", icon: "▣" },
+const TRAITS: { id: string; label: string; icon: GameIconName }[] = [
+  { id: "code", label: "CODE", icon: "laptop" },
+  { id: "arch", label: "ARCHITECT", icon: "stone-tower" },
+  { id: "player", label: "PLAYER", icon: "joystick" },
 ];
 
 export function DossierPanel() {
@@ -24,9 +25,6 @@ export function DossierPanel() {
 
   return (
     <OrnateFrame className="p-3 md:p-5">
-      <PixelBanner icon="sword" side="left" />
-      <PixelBanner icon="tree" side="right" />
-
       <SectionTitle>DOSSIER</SectionTitle>
 
       <div className="mt-5 grid gap-4 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.2fr)_auto]">
@@ -85,7 +83,15 @@ export function DossierPanel() {
                     </span>
                   </div>
                   <div className="stat-bar">
-                    <span style={{ width: `${s.value}%` }} />
+                    <motion.span
+                      initial={{ width: 0 }}
+                      animate={{ width: `${s.value}%` }}
+                      transition={{
+                        duration: 0.9,
+                        delay: 0.15,
+                        ease: [0.22, 1, 0.36, 1],
+                      }}
+                    />
                   </div>
                 </li>
               ))}
@@ -131,7 +137,7 @@ export function DossierPanel() {
               key={t.id}
               className="panel-frame flex flex-col items-center gap-1 px-2 py-3"
             >
-              <span className="font-mono text-sm text-accent">{t.icon}</span>
+              <GameIcon name={t.icon} className="h-7 w-7 text-accent" />
               <span className="pixel-title text-[7px] text-ink">{t.label}</span>
             </div>
           ))}

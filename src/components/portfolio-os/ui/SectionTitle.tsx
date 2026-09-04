@@ -1,3 +1,12 @@
+function TitleGem() {
+  return (
+    <span
+      className="gem inline-block h-2.5 w-2.5 rotate-45 bg-accent"
+      aria-hidden
+    />
+  );
+}
+
 export function SectionTitle({
   children,
   className = "",
@@ -7,17 +16,19 @@ export function SectionTitle({
 }) {
   return (
     <div className={`flex items-center justify-center gap-3 ${className}`}>
-      <span className="hidden h-px w-10 bg-gold/60 sm:block" aria-hidden />
-      <span className="text-gold/80" aria-hidden>
-        ✦
-      </span>
-      <h2 className="gold-title text-center text-[clamp(14px,2.8vw,22px)]">
+      <span
+        className="hidden h-0.5 w-12 bg-gradient-to-r from-transparent to-gold/70 sm:block"
+        aria-hidden
+      />
+      <TitleGem />
+      <h2 className="dungeon-title text-center text-[clamp(26px,5vw,44px)]">
         {children}
       </h2>
-      <span className="text-gold/80" aria-hidden>
-        ✦
-      </span>
-      <span className="hidden h-px w-10 bg-gold/60 sm:block" aria-hidden />
+      <TitleGem />
+      <span
+        className="hidden h-0.5 w-12 bg-gradient-to-l from-transparent to-gold/70 sm:block"
+        aria-hidden
+      />
     </div>
   );
 }

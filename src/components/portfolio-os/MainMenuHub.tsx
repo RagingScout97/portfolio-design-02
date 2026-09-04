@@ -2,22 +2,23 @@
 
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
+import { GameIcon, type GameIconName } from "@/components/icons/GameIcon";
 import { MENU_ITEMS, portfolio } from "@/data/portfolio";
 import { prefersReducedMotion } from "@/lib/motion";
 import type { SectionId } from "@/types/portfolio";
 import { CastleCrest, LionCrest } from "./ui/DecorCrests";
 import { KeyHintBar } from "./ui/KeyHintBar";
 import { OrnateFrame } from "./ui/OrnateFrame";
-import { PixelBanner } from "./ui/PixelBanner";
 import { StatusPill } from "./ui/StatusPill";
+import { TorchSconce } from "./ui/TorchSconce";
 
-const MENU_ICONS: Record<string, string> = {
-  dossier: "▣",
-  loadout: "⚔",
-  deployments: "♦",
-  missions: "※",
-  arcade: "▶",
-  uplink: "⌂",
+const MENU_ICONS: Record<string, GameIconName> = {
+  dossier: "scroll-unfurled",
+  loadout: "crossed-swords",
+  deployments: "family-tree",
+  missions: "treasure-map",
+  arcade: "joystick",
+  uplink: "crystal-ball",
 };
 
 export function MainMenuHub({
@@ -60,14 +61,14 @@ export function MainMenuHub({
       transition={{ duration: 0.3 }}
     >
       <OrnateFrame className="relative mx-auto w-full max-w-6xl p-3 md:p-6">
-        <PixelBanner icon="sword" side="left" />
-        <PixelBanner icon="crosshair" side="right" />
+        <TorchSconce side="left" />
+        <TorchSconce side="right" />
 
         <header className="relative z-[1] text-center">
-          <h1 className="gold-title text-[clamp(18px,4vw,36px)] leading-tight">
+          <h1 className="dungeon-title text-[clamp(38px,8vw,84px)]">
             {portfolio.profile.handle.toUpperCase()}
           </h1>
-          <p className="pixel-title mt-3 text-accent">
+          <p className="dungeon-sub mt-2 text-[clamp(12px,1.8vw,18px)] text-accent">
             SYSTEMS · FULL STACK
           </p>
           <p className="mt-3 flex items-center justify-center gap-2 font-mono text-[11px] text-ink-muted md:text-sm">
@@ -114,13 +115,18 @@ export function MainMenuHub({
                       <span className="font-mono text-xs text-accent">
                         {item.index}
                       </span>
-                      <span className="w-5 text-center text-sm" aria-hidden>
-                        {MENU_ICONS[item.id] ?? "•"}
-                      </span>
+                      <GameIcon
+                        name={MENU_ICONS[item.id] ?? "round-star"}
+                        className={`h-6 w-6 shrink-0 transition-colors ${
+                          active ? "text-accent" : "text-ink-muted/70"
+                        }`}
+                      />
                       <span className="pixel-title flex-1 text-[10px] md:text-[11px]">
                         {item.label}
                       </span>
-                      {active && <span className="text-accent">◀</span>}
+                      {active && (
+                        <span className="arrow-bob text-accent">◀</span>
+                      )}
                     </button>
                   </li>
                 );

@@ -1,8 +1,19 @@
 "use client";
 
+import { GameIcon, type GameIconName } from "@/components/icons/GameIcon";
 import { MENU_ITEMS, portfolio } from "@/data/portfolio";
 import type { SectionId } from "@/types/portfolio";
 import { StatusPill } from "./ui/StatusPill";
+
+export const SECTION_ICONS: Record<SectionId, GameIconName> = {
+  menu: "dungeon-gate",
+  dossier: "scroll-unfurled",
+  loadout: "crossed-swords",
+  deployments: "family-tree",
+  missions: "treasure-map",
+  arcade: "joystick",
+  uplink: "crystal-ball",
+};
 
 const LABELS: Record<SectionId, string> = {
   menu: "MAIN MENU",
@@ -46,7 +57,7 @@ export function HudChrome({
               key={item.id}
               type="button"
               onClick={() => onNavigate(item.id)}
-              className={`min-h-11 min-w-11 border-2 px-2 py-1 font-mono text-[10px] ${
+              className={`flex min-h-11 min-w-11 flex-col items-center justify-center gap-0.5 border-2 px-2 py-1 font-mono text-[9px] ${
                 active
                   ? "border-accent bg-accent/15 text-accent shadow-[0_0_10px_rgba(82,217,236,0.35)]"
                   : "border-transparent text-ink-muted hover:border-hairline hover:text-ink"
@@ -54,6 +65,7 @@ export function HudChrome({
               aria-label={item.label}
               title={item.label}
             >
+              <GameIcon name={SECTION_ICONS[item.id]} className="h-4 w-4" />
               {item.index}
             </button>
           );

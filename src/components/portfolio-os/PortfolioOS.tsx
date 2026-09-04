@@ -14,6 +14,7 @@ import { BootSequence } from "./BootSequence";
 import { HudChrome } from "./HudChrome";
 import { MainMenuHub } from "./MainMenuHub";
 import { MobileDock } from "./MobileDock";
+import { DungeonWall } from "./ui/DungeonWall";
 
 export function PortfolioOS() {
   const [booted, setBooted] = useState(false);
@@ -46,7 +47,7 @@ export function PortfolioOS() {
 
   return (
     <div className="relative h-dvh w-full overflow-hidden bg-canvas text-ink">
-      <div className="hud-grid pointer-events-none absolute inset-0 opacity-80" />
+      <DungeonWall className="pointer-events-none absolute inset-0 h-full w-full" />
       <div className="scanlines pointer-events-none absolute inset-0" />
 
       <AnimatePresence mode="wait">
