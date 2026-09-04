@@ -46,7 +46,7 @@ export function PortfolioOS() {
 
   return (
     <div className="relative h-dvh w-full overflow-hidden bg-canvas text-ink">
-      <div className="hud-grid pointer-events-none absolute inset-0 opacity-60" />
+      <div className="hud-grid pointer-events-none absolute inset-0 opacity-80" />
       <div className="scanlines pointer-events-none absolute inset-0" />
 
       <AnimatePresence mode="wait">
@@ -73,20 +73,12 @@ export function PortfolioOS() {
                 ) : (
                   <motion.main
                     key={section}
-                    className="panel-scroll relative z-10 mx-auto w-full max-w-6xl flex-1 px-4 py-4 md:px-8 md:py-6"
+                    className="panel-scroll relative z-10 mx-auto w-full max-w-6xl flex-1 px-2 py-3 md:px-6 md:py-4"
                     initial={reduce ? false : { opacity: 0, y: 16 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={reduce ? undefined : { opacity: 0, y: -10 }}
                     transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
                   >
-                    <button
-                      type="button"
-                      onClick={backToMenu}
-                      className="mb-4 font-mono text-[11px] tracking-[0.2em] text-ink-muted transition hover:text-accent"
-                    >
-                      ← ESC · MAIN MENU
-                    </button>
-
                     {section === "dossier" && <DossierPanel />}
                     {section === "loadout" && <SkillTreePanel />}
                     {section === "deployments" && <DeploymentsPanel />}

@@ -7,6 +7,11 @@ import {
   useState,
   type PointerEvent as ReactPointerEvent,
 } from "react";
+import { portfolio } from "@/data/portfolio";
+import { KeyHintBar } from "../ui/KeyHintBar";
+import { OrnateFrame } from "../ui/OrnateFrame";
+import { PixelBanner } from "../ui/PixelBanner";
+import { SectionTitle } from "../ui/SectionTitle";
 
 type Word = {
   id: number;
@@ -30,7 +35,46 @@ const WORDS = [
   "GIT",
 ];
 
-export function ArcadePanel() {
+const CABINETS = [
+  {
+    id: "word-barrage",
+    name: "WORD BARRAGE",
+    blurb: "Tap falling tech words before they hit the floor.",
+    playable: true,
+    preview: " Barrage ",
+  },
+  {
+    id: "snake",
+    name: "SNAKE BYTE",
+    blurb: "Classic snake. Eat pixels, grow longer, avoid walls.",
+    playable: false,
+    preview: " Snake ",
+  },
+  {
+    id: "breaker",
+    name: "BLOCK BREAKER",
+    blurb: "Breakout-style brick smash. Coming soon.",
+    playable: false,
+    preview: " Break ",
+  },
+  {
+    id: "runner",
+    name: "CODE RUNNER",
+    blurb: "Side-scroll through syntax storms. Coming soon.",
+    playable: false,
+    preview: " Run ",
+  },
+] as const;
+
+const FAKE_SCORES = [
+  { name: "RAGING SCOUT 97", score: 12450 },
+  { name: "CODE HUNTER", score: 9800 },
+  { name: "BYTE BANDIT", score: 7200 },
+  { name: "DEBUG KNIGHT", score: 5100 },
+  { name: "SQL SORCERER", score: 3400 },
+];
+
+function WordBarrageGame({ onExit }: { onExit: () => void }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [score, setScore] = useState(0);
   const [running, setRunning] = useState(false);
@@ -127,7 +171,6 @@ export function ArcadePanel() {
           }
         }
 
-        // ship
         const shipPx = s.shipX * w;
         ctx.fillStyle = "#5ce1ff";
         ctx.beginPath();
@@ -169,7 +212,6 @@ export function ArcadePanel() {
     const rect = canvas.getBoundingClientRect();
     const x = clientX - rect.left;
     const y = clientY - rect.top;
-
     s.shipX = Math.min(0.95, Math.max(0.05, x / rect.width));
 
     for (const word of s.words) {
@@ -185,19 +227,16 @@ export function ArcadePanel() {
     }
   };
 
-  const onPointer = (e: ReactPointerEvent<HTMLCanvasElement>) => {
-    shootAt(e.clientX, e.clientY);
-  };
-
   return (
-    <section className="panel-frame p-4 md:p-6">
-      <p className="pixel-title text-accent">05 · ARCADE</p>
-      <h2 className="pixel-title-lg mt-3 text-ink">Word Barrage</h2>
-      <p className="mt-2 max-w-xl font-mono text-sm text-ink-muted">
-        Tap or click falling tech words before they hit the floor.
-      </p>
-
-      <div className="mt-5 flex flex-wrap items-center gap-3">
+    <div>
+      <div className="mb-3 flex flex-wrap items-center gap-3">
+        <button
+          type="button"
+          onClick={onExit}
+          className="min-h-11 border-2 border-hairline px-3 font-mono text-[11px] hover:border-accent hover:text-accent"
+        >
+          ← LOBBY
+        </button>
         <button
           type="button"
           onClick={reset}
@@ -210,18 +249,166 @@ export function ArcadePanel() {
           <span className="font-mono text-sm text-danger">SYSTEM BREACH</span>
         )}
       </div>
+      <canvas
+        ref={canvasRef}
+        className="w-full touch-none cursor-crosshair border-2 border-hairline"
+        onPointerDown={(e: ReactPointerEvent<HTMLCanvasElement>) =>
+          shootAt(e.clientX, e.clientY)
+        }
+        aria-label="Word Barrage mini-game canvas"
+      />
+    </div>
+  );
+}
 
-      <div className="mt-4 w-full">
-        <canvas
-          ref={canvasRef}
-          className="w-full touch-none cursor-crosshair"
-          onPointerDown={onPointer}
-          aria-label="Word Barrage mini-game canvas"
-        />
-      </div>
-      <p className="mt-3 font-mono text-[10px] tracking-[0.16em] text-ink-muted">
-        DESKTOP · CLICK WORDS · MOBILE · TAP TARGETS
+export function ArcadePanel() {
+  const [selected, setSelected] = useState(0);
+  const [playing, setPlaying] = useState(false);
+  const cab = CABINETS[selected];
+
+  useEffect(() => {
+    if (playing) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "ArrowRight" || e.key === "ArrowDown") {
+        e.preventDefault();
+        setSelected((s) => Math.min(CABINETS.length - 1, s + 1));
+      }
+      if (e.key === "ArrowLeft" || e.key === "ArrowUp") {
+        e.preventDefault();
+        setSelected((s) => Math.max(0, s - 1));
+      }
+      if (e.key === "Enter" && CABINETS[selected].playable) {
+        e.preventDefault();
+        setPlaying(true);
+      }
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [playing, selected]);
+
+  return (
+    <OrnateFrame className="p-3 md:p-5">
+      <PixelBanner icon="trophy" side="left" />
+      <PixelBanner icon="pad" side="right" />
+      <SectionTitle>ARCADE</SectionTitle>
+      <p className="mt-2 text-center pixel-title text-[8px] text-accent">
+        PLAY · COMPETE · LEVEL UP
       </p>
-    </section>
+
+      {playing ? (
+        <div className="mt-4">
+          <WordBarrageGame onExit={() => setPlaying(false)} />
+        </div>
+      ) : (
+        <>
+          <div className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+            {CABINETS.map((c, i) => {
+              const active = i === selected;
+              return (
+                <button
+                  key={c.id}
+                  type="button"
+                  onClick={() => setSelected(i)}
+                  onDoubleClick={() => c.playable && setPlaying(true)}
+                  className={`panel-frame flex flex-col items-center p-3 text-center transition ${
+                    active
+                      ? "border-accent shadow-[0_0_16px_rgba(82,217,236,0.3)]"
+                      : "opacity-80 hover:opacity-100"
+                  }`}
+                >
+                  <div
+                    className={`relative mb-2 flex h-24 w-full flex-col items-center justify-center border-2 bg-canvas font-mono text-[10px] ${
+                      active ? "border-accent text-accent" : "border-hairline text-ink-muted"
+                    }`}
+                  >
+                    <span>{c.preview}</span>
+                    {!c.playable && (
+                      <span className="mt-2 text-[8px] text-accent-hot">
+                        LOCKED
+                      </span>
+                    )}
+                  </div>
+                  <p className="pixel-title text-[8px] text-ink">{c.name}</p>
+                  <span className="mt-1 text-gold text-[10px]">★★★★★</span>
+                </button>
+              );
+            })}
+          </div>
+
+          <div className="mt-4 grid gap-4 lg:grid-cols-[1.2fr_0.8fr]">
+            <div className="panel-frame p-4">
+              <div className="flex items-start gap-3">
+                <span className="text-2xl" aria-hidden>
+                  ▣
+                </span>
+                <div>
+                  <p className="pixel-title text-[10px] text-ink">{cab.name}</p>
+                  <p className="mt-2 font-mono text-[11px] text-ink-muted">
+                    {cab.blurb}
+                  </p>
+                  {cab.playable ? (
+                    <button
+                      type="button"
+                      onClick={() => setPlaying(true)}
+                      className="mt-3 font-mono text-[11px] text-accent animate-pulse"
+                    >
+                      ▶ PRESS ENTER TO PLAY ◀
+                    </button>
+                  ) : (
+                    <p className="mt-3 font-mono text-[11px] text-accent-hot">
+                      COMING SOON
+                    </p>
+                  )}
+                </div>
+              </div>
+              <div className="mt-4 flex flex-wrap gap-3">
+                <div className="panel-frame px-3 py-2">
+                  <p className="font-mono text-[9px] text-ink-muted">BEST SCORE</p>
+                  <p className="font-mono text-sm text-gold">001,245</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="panel-frame p-3">
+              <p className="pixel-title text-center text-[8px] text-gold">
+                HIGH SCORES
+              </p>
+              <ol className="mt-2 space-y-1">
+                {FAKE_SCORES.map((row, i) => (
+                  <li
+                    key={row.name}
+                    className="flex items-center justify-between font-mono text-[10px]"
+                  >
+                    <span className="text-ink-muted">
+                      {i + 1}. {row.name}
+                    </span>
+                    <span className="text-accent">
+                      {row.score.toLocaleString()}
+                    </span>
+                  </li>
+                ))}
+              </ol>
+            </div>
+          </div>
+
+          <div className="mt-4 panel-frame flex flex-wrap items-center justify-between gap-2 px-3 py-2">
+            <p className="font-mono text-[10px] text-ink">
+              PLAYER · {portfolio.profile.handle.toUpperCase()}
+            </p>
+            <p className="font-mono text-[10px] text-accent">LV 97</p>
+            <p className="font-mono text-[10px] text-gold">TOKENS 97</p>
+          </div>
+        </>
+      )}
+
+      <KeyHintBar
+        className="mt-4"
+        hints={[
+          { key: "←→", label: "SELECT" },
+          { key: "ENTER", label: "PLAY" },
+          { key: "ESC", label: "BACK" },
+        ]}
+      />
+    </OrnateFrame>
   );
 }

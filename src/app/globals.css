@@ -1,18 +1,22 @@
 @import "tailwindcss";
 
 :root {
-  --canvas: #0c0c0c;
-  --surface: #1a1a1a;
-  --surface-2: #2b2b2b;
-  --hairline: #4a4a4a;
+  --canvas: #0a0b0c;
+  --surface: #1a1c1e;
+  --surface-2: #242628;
+  --hairline: #4a4e52;
+  --stone: #2e3236;
+  --stone-light: #5a5e62;
   --ink: #f0f0f0;
   --ink-muted: #9a9a9a;
   --accent: #52d9ec;
   --accent-hot: #f4b41b;
+  --gold: #e8c45a;
   --danger: #ff3e3e;
   --ok: #3dffa8;
-  --scan: rgba(82, 217, 236, 0.05);
+  --scan: rgba(82, 217, 236, 0.045);
   --pixel-glow: 0 0 0 2px #52d9ec, 0 0 12px rgba(82, 217, 236, 0.45);
+  --gold-glow: 0 0 8px rgba(244, 180, 27, 0.35);
   --background: var(--canvas);
   --foreground: var(--ink);
 }
@@ -24,10 +28,13 @@
   --color-surface: var(--surface);
   --color-surface-2: var(--surface-2);
   --color-hairline: var(--hairline);
+  --color-stone: var(--stone);
+  --color-stone-light: var(--stone-light);
   --color-ink: var(--ink);
   --color-ink-muted: var(--ink-muted);
   --color-accent: var(--accent);
   --color-accent-hot: var(--accent-hot);
+  --color-gold: var(--gold);
   --color-ok: var(--ok);
   --color-danger: var(--danger);
   --font-display: var(--font-press-start);
@@ -68,9 +75,21 @@ img.pixel,
 .hud-grid {
   background-color: var(--canvas);
   background-image:
-    linear-gradient(var(--scan) 1px, transparent 1px),
-    linear-gradient(90deg, var(--scan) 1px, transparent 1px);
-  background-size: 16px 16px;
+    linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 7px,
+      rgba(0, 0, 0, 0.15) 7px,
+      rgba(0, 0, 0, 0.15) 8px
+    ),
+    linear-gradient(180deg, #121416 0%, #0a0b0c 100%);
+  background-size:
+    32px 32px,
+    32px 32px,
+    100% 8px,
+    100% 100%;
 }
 
 .scanlines::after {
@@ -85,27 +104,28 @@ img.pixel,
     rgba(0, 0, 0, 0.18) 2px,
     rgba(0, 0, 0, 0.18) 3px
   );
-  opacity: 0.4;
+  opacity: 0.35;
   z-index: 1;
 }
 
-/* Classic RPG pixel panel (CSS 9-slice style borders) */
+/* Ornate stone panel */
 .panel-frame {
   position: relative;
-  border: 4px solid #5a5a5a;
+  border: 3px solid #5a5e62;
   background:
     repeating-linear-gradient(
       0deg,
       transparent,
       transparent 3px,
-      rgba(0, 0, 0, 0.12) 3px,
-      rgba(0, 0, 0, 0.12) 4px
+      rgba(0, 0, 0, 0.1) 3px,
+      rgba(0, 0, 0, 0.1) 4px
     ),
-    var(--surface);
+    linear-gradient(180deg, #222528 0%, #1a1c1e 100%);
   box-shadow:
-    inset 0 0 0 2px #1a1a1a,
-    inset 0 0 0 3px #3a3a3a,
-    0 0 0 1px #0a0a0a;
+    inset 0 0 0 1px #0a0a0a,
+    inset 0 0 0 2px #3a3e42,
+    0 0 0 1px #0a0a0a,
+    0 4px 0 #0a0a0a;
 }
 
 .panel-frame::before {
@@ -113,16 +133,63 @@ img.pixel,
   pointer-events: none;
   position: absolute;
   inset: 0;
-  border: 2px solid transparent;
-  box-shadow: inset 0 0 24px rgba(82, 217, 236, 0.06);
+  border: 1px solid transparent;
+  box-shadow: inset 0 0 28px rgba(82, 217, 236, 0.05);
 }
 
 .panel-frame-glow {
   border-color: var(--accent);
   box-shadow:
-    inset 0 0 0 2px #1a1a1a,
+    inset 0 0 0 1px #0a0a0a,
+    inset 0 0 0 2px #3a3e42,
     0 0 0 1px var(--accent),
-    0 0 16px rgba(82, 217, 236, 0.25);
+    0 0 18px rgba(82, 217, 236, 0.28);
+}
+
+.ornate-outer {
+  position: relative;
+  border: 4px solid #4a4e52;
+  background: linear-gradient(180deg, #1e2024 0%, #121416 100%);
+  box-shadow:
+    inset 0 0 0 2px #2a2e32,
+    inset 0 0 0 3px #1a1c1e,
+    0 0 0 1px #0a0a0a,
+    0 0 24px rgba(0, 0, 0, 0.5);
+}
+
+.ornate-outer::before,
+.ornate-outer::after {
+  content: "";
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background: var(--accent);
+  box-shadow: 0 0 8px rgba(82, 217, 236, 0.8);
+  z-index: 2;
+  pointer-events: none;
+}
+
+.ornate-outer::before {
+  top: 6px;
+  left: 6px;
+}
+
+.ornate-outer::after {
+  top: 6px;
+  right: 6px;
+}
+
+.ornate-gems {
+  pointer-events: none;
+}
+
+.ornate-gems span {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: var(--accent);
+  box-shadow: 0 0 6px rgba(82, 217, 236, 0.75);
+  z-index: 2;
 }
 
 .pixel-title {
@@ -141,9 +208,23 @@ img.pixel,
   text-transform: uppercase;
 }
 
+.gold-title {
+  font-family: var(--font-press-start), monospace;
+  color: var(--gold);
+  text-shadow:
+    0 1px 0 #8a6a20,
+    0 2px 0 #5a4510,
+    0 3px 0 #3a2e08,
+    0 0 12px rgba(244, 180, 27, 0.35);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
 .menu-item-active {
-  background: color-mix(in srgb, var(--accent) 18%, transparent);
-  box-shadow: inset 4px 0 0 var(--accent);
+  background: color-mix(in srgb, var(--accent) 16%, transparent);
+  box-shadow:
+    inset 0 0 0 2px var(--accent),
+    0 0 12px rgba(82, 217, 236, 0.25);
 }
 
 .ability-node {
@@ -167,6 +248,36 @@ img.pixel,
   stroke: var(--accent);
   stroke-width: 3;
   filter: drop-shadow(0 0 4px rgba(82, 217, 236, 0.8));
+}
+
+.stat-bar {
+  height: 10px;
+  border: 2px solid #4a4e52;
+  background: #0a0b0c;
+  padding: 1px;
+}
+
+.stat-bar > span {
+  display: block;
+  height: 100%;
+  background: linear-gradient(90deg, #3ab8c8, var(--accent));
+  box-shadow: 0 0 6px rgba(82, 217, 236, 0.5);
+}
+
+.progress-segments {
+  display: flex;
+  gap: 2px;
+  height: 100%;
+}
+
+.progress-segments > i {
+  flex: 1;
+  background: #1a1c1e;
+}
+
+.progress-segments > i.on {
+  background: var(--accent);
+  box-shadow: 0 0 4px rgba(82, 217, 236, 0.6);
 }
 
 @media (prefers-reduced-motion: reduce) {

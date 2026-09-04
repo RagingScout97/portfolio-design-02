@@ -39,7 +39,7 @@ export function AbilityTreeCanvas({
   }, [nodes, lit]);
 
   return (
-    <div className="panel-frame relative overflow-auto bg-canvas/80">
+    <div className="panel-frame relative overflow-auto bg-canvas/90 shadow-[inset_0_0_40px_rgba(82,217,236,0.04)]">
       <svg
         viewBox={`0 0 ${width} ${height}`}
         className="pixel mx-auto block h-auto w-full min-h-[280px] max-h-[min(60vh,560px)]"

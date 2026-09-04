@@ -2,6 +2,7 @@
 
 import { MENU_ITEMS, portfolio } from "@/data/portfolio";
 import type { SectionId } from "@/types/portfolio";
+import { StatusPill } from "./ui/StatusPill";
 
 const LABELS: Record<SectionId, string> = {
   menu: "MAIN MENU",
@@ -22,14 +23,16 @@ export function HudChrome({
   onHome: () => void;
   onNavigate: (id: SectionId) => void;
 }) {
+  if (section === "menu") return null;
+
   return (
-    <header className="relative z-20 flex shrink-0 items-center justify-between gap-3 border-b-4 border-hairline bg-surface px-3 py-2 md:px-5">
+    <header className="relative z-20 flex shrink-0 items-center justify-between gap-3 border-b-4 border-hairline bg-surface/95 px-3 py-2 md:px-5">
       <button
         type="button"
         onClick={onHome}
         className="min-h-11 text-left hover:text-accent"
       >
-        <p className="pixel-title text-[8px] text-accent">RAGINGSCOUT97</p>
+        <p className="pixel-title text-[8px] text-gold">RAGINGSCOUT97</p>
         <p className="mt-1 font-mono text-[11px] text-ink">
           {portfolio.profile.name.split(" ")[0]}
         </p>
@@ -43,11 +46,13 @@ export function HudChrome({
               key={item.id}
               type="button"
               onClick={() => onNavigate(item.id)}
-              className={`min-h-11 border-2 px-2 py-1 font-mono text-[10px] ${
+              className={`min-h-11 min-w-11 border-2 px-2 py-1 font-mono text-[10px] ${
                 active
-                  ? "border-accent bg-accent/15 text-accent"
+                  ? "border-accent bg-accent/15 text-accent shadow-[0_0_10px_rgba(82,217,236,0.35)]"
                   : "border-transparent text-ink-muted hover:border-hairline hover:text-ink"
               }`}
+              aria-label={item.label}
+              title={item.label}
             >
               {item.index}
             </button>
@@ -57,7 +62,9 @@ export function HudChrome({
 
       <div className="text-right">
         <p className="pixel-title text-[8px] text-ink">{LABELS[section]}</p>
-        <p className="mt-1 font-mono text-[10px] text-ok">ONLINE</p>
+        <div className="mt-1 flex justify-end">
+          <StatusPill />
+        </div>
       </div>
     </header>
   );
